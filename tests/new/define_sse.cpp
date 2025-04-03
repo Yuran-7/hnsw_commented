@@ -44,9 +44,30 @@ void test_sse_macro() {
     std::cout << "_M_IX86_FP is NOT defined" << std::endl;
 #endif
 
+#ifdef _M_AMD64
+    std::cout << "_M_AMD64 is defined" << std::endl;
+#else
+    std::cout << "_M_AMD64 is NOT defined" << std::endl;
+#endif
+
+#ifdef _M_X64
+    std::cout << "_M_X64 is defined" << std::endl;
+#else
+    std::cout << "_M_X64 is NOT defined" << std::endl;
+#endif
+
+#ifdef __GNUC__
+    std::cout << "__GNUC__ is defined" << std::endl;
+#else
+    std::cout << "__GNUC__ is NOT defined" << std::endl;
+#endif
+
+
 }
 
 int main() {
     test_sse_macro();
+    std::cout << AVXCapable() << std::endl;
+    std::cout << AVX512Capable() << std::endl;
     return 0;
 }

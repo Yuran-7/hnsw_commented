@@ -11,7 +11,8 @@
 #endif
 
 #ifndef NO_MANUAL_VECTORIZATION  // 如果没有定义 NO_MANUAL_VECTORIZATION
-  #if (defined(__SSE__) || _M_IX86_FP > 0 || defined(_M_AMD64) || defined(_M_X64))     // 这些宏通常与处理器架构和编译器支持的指令集相关，
+  // 这些宏通常与处理器架构和编译器支持的指令集相关
+  #if (defined(__SSE__) || _M_IX86_FP > 0 || defined(_M_AMD64) || defined(_M_X64))     
     // 如果支持 SSE 或者是 x86/x64 架构
     #define USE_SSE  // 启用 SSE 向量化优化
     #ifdef __AVX__  // 如果编译器定义了 AVX 支持
@@ -56,6 +57,7 @@
   #if defined(__GNUC__)
     #define PORTABLE_ALIGN32 __attribute__((aligned(32)))   // 将变量或结构体对齐到 32 字节边界
     #define PORTABLE_ALIGN64 __attribute__((aligned(64)))   // 将变量或结构体对齐到 64 字节边界
+  // MSVC 使用 __declspec(align(32))
   #else
     #define PORTABLE_ALIGN32 __declspec(align(32))
     #define PORTABLE_ALIGN64 __declspec(align(64))
