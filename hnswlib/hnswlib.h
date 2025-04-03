@@ -2,7 +2,9 @@
 
 // https://github.com/nmslib/hnswlib/pull/508
 // This allows others to provide their own error stream (e.g. RcppHNSW)
-#ifndef HNSWLIB_ERR_OVERRIDE    // 整个项目中都没有定义HNSWLIB_ERR_OVERRIDE，所以下面会报灰色
+
+// 这个的目的就是只要我们没有手动添加这个宏，就会用std::cerr替代HNSWERR
+#ifndef HNSWLIB_ERR_OVERRIDE    
   #define HNSWERR std::cerr
 #else
   #define HNSWERR HNSWLIB_ERR_OVERRIDE
