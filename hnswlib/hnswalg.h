@@ -377,7 +377,7 @@ public:
     searchBaseLayer(tableint ep_id, const void *data_point, int layer) {
         VisitedList *vl = visited_list_pool_->getFreeVisitedList();
         vl_type *visited_array = vl->mass;  // 数组大小好像是100万
-        vl_type visited_array_tag = vl->curV;   // -1表示被访问了
+        vl_type visited_array_tag = vl->curV;   // 1表示被访问了，0代表未访问
         // 优先队列底层存储元素的容器vector，降序存储
         std::priority_queue<std::pair<dist_t, tableint>, std::vector<std::pair<dist_t, tableint>>, CompareByFirst> top_candidates;  // 结果集，存的是正数，最大数量为ef_construction_
         std::priority_queue<std::pair<dist_t, tableint>, std::vector<std::pair<dist_t, tableint>>, CompareByFirst> candidateSet;    // 动态候选集，存的是负数，没有大小限制

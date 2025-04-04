@@ -12,7 +12,7 @@
 
 #ifndef NO_MANUAL_VECTORIZATION  // 如果没有定义 NO_MANUAL_VECTORIZATION
   // 这些宏通常与处理器架构和编译器支持的指令集相关
-  #if (defined(__SSE__) || _M_IX86_FP > 0 || defined(_M_AMD64) || defined(_M_X64))     
+  #if (defined(__SSE__) || _M_IX86_FP > 0 || defined(_M_AMD64) || defined(_M_X64))
     // 如果支持 SSE 或者是 x86/x64 架构
     #define USE_SSE  // 启用 SSE 向量化优化
     #ifdef __AVX__  // 如果编译器定义了 AVX 支持
@@ -129,6 +129,7 @@
 #include <string.h>
 
 namespace hnswlib {
+// using labeltype = size_t;
 typedef size_t labeltype;
 
 // This can be extended to store state for filtering (e.g. from a std::set)
@@ -174,10 +175,9 @@ static void readBinaryPOD(std::istream &in, T &podRef) {
     in.read((char *) &podRef, sizeof(T));
 }
 
-// DISTFUNC<dist_t> fstdistfunc_;
+// L2Space的成员变量DISTFUNC<float> fstdistfunc_;
 // 函数指针的声明格式为：返回类型 (*指针变量名)(参数列表)
-// float(*DISTFUNC)(const void *, const void *, const void *);
-// DISTFUNC = SomeFunction;
+// 等价于typedef float(*DISTFUNC)(const void *, const void *, const void *);
 template<typename MTYPE>
 using DISTFUNC = MTYPE(*)(const void *, const void *, const void *);
 
@@ -214,6 +214,7 @@ class AlgorithmInterface {  // 抽象类（包含一个或多个纯虚函数）�
     }
 };
 
+// 这个函数的任务就是反转一个优先队列的顺序
 template<typename dist_t>
 std::vector<std::pair<dist_t, labeltype>>
 AlgorithmInterface<dist_t>::searchKnnCloserFirst(const void* query_data, size_t k,

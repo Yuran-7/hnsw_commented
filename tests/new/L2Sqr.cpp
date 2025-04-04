@@ -77,7 +77,20 @@ int main() {
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration<double>(end - start).count();
 
-    cout << "SSE的耗时:" << duration << " 秒" << endl;
+    cout << "SSE16的耗时:" << duration << " 秒" << endl;
+
+    
+    start = chrono::high_resolution_clock::now();
+
+    for (size_t i = 1; i < vectors.size(); i++) {
+        float dist = hnswlib::L2SqrSIMD4Ext(query, vectors[i].data(), l2space.get_dist_func_param());
+        // cout << "第 " << i << " 个向量的 L2 距离: " << dist << "\r";
+    }
+
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration<double>(end - start).count();
+
+    cout << "SSE4的耗时:" << duration << " 秒" << endl;
 
 
 
